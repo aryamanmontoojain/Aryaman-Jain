@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aryaman Montoo Jain | FPGA &amp; Digital Design Engineer</title>
+<meta name="description" content="Portfolio of Aryaman Montoo Jain: FPGA, RTL design and digital signal processing.">
+<style>
+/* ===== 1. DESIGN TOKENS ===== */
+:root{
+  --bg:#0a0f1a;--panel:#111a2b;--panel2:#16223a;--line:#27364f;
+  --text:#e8eef8;--muted:#b0bdd1;
+  --cyan:#22d3ee;--blue:#60a5fa;--green:#34d399;--orange:#fb923c;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular",Consolas,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:5rem}
+body{margin:0;background:var(--bg);color:var(--text);font:1.0625rem/1.7 var(--font);
+  background-image:linear-gradient(rgba(34,211,238,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,.04) 1px,transparent 1px);
+  background-size:40px 40px}
+h1,h2,h3{line-height:1.2;margin:0 0 .6rem}
+h2{font-size:clamp(1.7rem,3vw,2.2rem)}
+h3{font-size:1.2rem}
+p{margin:0 0 1rem}
+a{color:var(--cyan)}
+ul{padding-left:1.2rem;margin:.4rem 0 1rem}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:1rem;top:-4rem;background:var(--orange);color:#000;padding:.6rem 1rem;z-index:100;border-radius:6px;font-weight:700}
+.skip:focus{top:1rem}
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.25rem}
+section{padding:4.5rem 0}
+.eyebrow{font-family:var(--mono);color:var(--green);font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.eyebrow::before{content:"// "}
+.grid{display:grid;gap:1.25rem}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:10px;padding:1.4rem;transition:border-color .2s}
+.card:hover{border-color:var(--blue)}
+.card.o{border-left-color:var(--orange)}.card.g{border-left-color:var(--green)}.card.b{border-left-color:var(--blue)}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;padding:0;list-style:none;margin:.5rem 0 1rem}
+.tags li{font:.85rem var(--mono);background:var(--panel2);border:1px solid var(--line);padding:.15rem .55rem;border-radius:999px;color:var(--text)}
+.note{font:.85rem var(--mono);color:var(--orange)}
+.btn{display:inline-block;padding:.75rem 1.4rem;border-radius:8px;font-weight:700;text-decoration:none;border:2px solid var(--cyan);min-height:44px}
+.btn.primary{background:var(--cyan);color:#04121a}
+.btn.secondary{color:var(--cyan);background:transparent}
+.btn:hover{transform:translateY(-2px)}
+
+/* ===== 2. HEADER / NAV ===== */
+header.site{position:sticky;top:0;z-index:50;background:rgba(10,15,26,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+.bar{display:flex;align-items:center;justify-content:space-between;min-height:64px}
+.logo{font:700 1.05rem var(--mono);color:var(--text);text-decoration:none}
+.logo span{color:var(--cyan)}
+nav ul{display:flex;gap:.25rem;list-style:none;margin:0;padding:0}
+nav a{display:block;padding:.6rem .8rem;color:var(--text);text-decoration:none;border-bottom:3px solid transparent;font-size:.98rem}
+nav a:hover{color:var(--cyan)}
+nav a[aria-current="true"]{border-bottom-color:var(--orange);font-weight:700}
+.menu-btn{display:none;background:var(--panel2);color:var(--text);border:1px solid var(--cyan);border-radius:8px;padding:.5rem .9rem;font:inherit;min-height:44px;cursor:pointer}
+
+/* ===== 3. HERO ===== */
+.hero{padding:3rem 0 4rem}
+.hero .wrap{display:grid;gap:2rem;grid-template-columns:1.1fr .9fr;align-items:center}
+.hero h1{font-size:clamp(2.2rem,5vw,3.5rem)}
+.hero .title{font:1.15rem var(--mono);color:var(--cyan);margin-bottom:1rem}
+.cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.4rem}
+.visual{position:relative;aspect-ratio:1/1;max-height:440px;background:radial-gradient(circle at 50% 50%,#14243d,#0a0f1a 70%);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.visual canvas{width:100%;height:100%;display:block}
+.visual .fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:1.5rem;color:var(--muted);font-family:var(--mono);font-size:.95rem}
+.visual.nogl .fallback{display:flex}
+.bin{font:.8rem var(--mono);color:var(--green);opacity:.8;margin-top:1rem;word-break:break-all}
+.wave{width:100%;height:40px;display:block}
+
+/* ===== 4. TIMELINE ===== */
+.timeline{list-style:none;margin:0;padding:0 0 0 1.5rem;border-left:2px solid var(--line)}
+.timeline li{position:relative;margin-bottom:1.6rem;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem 1.4rem}
+.timeline li::before{content:"";position:absolute;left:-2.1rem;top:1.5rem;width:14px;height:14px;background:var(--bg);border:3px solid var(--orange);border-radius:50%}
+.date{font:.9rem var(--mono);color:var(--orange)}
+
+/* ===== 5. CONTACT FORM ===== */
+label{display:block;font-weight:600;margin-bottom:.3rem}
+input,textarea{width:100%;background:#0c1424;color:var(--text);border:2px solid #3b4d6b;border-radius:8px;padding:.7rem;font:inherit;margin-bottom:.3rem}
+input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--orange)}
+.err{color:#ffb780;font-size:.92rem;min-height:1.4rem;margin-bottom:.5rem}
+#status{margin-top:1rem;padding:.8rem 1rem;border-radius:8px;display:none;border:2px solid}
+#status.ok{display:block;border-color:var(--green);background:#0d2a21}
+#status.bad{display:block;border-color:var(--orange);background:#33200f}
+footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted);font-size:.95rem}
+
+/* ===== 6. RESPONSIVE ===== */
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr}
+  .menu-btn{display:inline-block}
+  nav ul{display:none;position:absolute;left:0;right:0;top:64px;flex-direction:column;background:var(--bg);border-bottom:1px solid var(--line);padding:.5rem 1.25rem 1rem}
+  nav ul.open{display:flex}
+  nav a{border-bottom:0;border-left:4px solid transparent;padding:.8rem}
+  nav a[aria-current="true"]{border-left-color:var(--orange)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<!-- ===== HEADER & NAVIGATION ===== -->
+<header class="site">
+  <div class="wrap bar">
+    <a class="logo" href="#home" aria-label="Aryaman Jain, home">&lt;<span>AJ</span>/&gt;</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navList">Menu</button>
+    <nav aria-label="Main">
+      <ul id="navList">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#achievements">Achievements</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ===== HERO ===== -->
+<section id="home" class="hero" aria-labelledby="hero-h">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Digital Electronics &amp; Communication</p>
+      <h1 id="hero-h">Aryaman Montoo Jain</h1>
+      <p class="title">FPGA &amp; Digital Design Engineer</p>
+      <p>I design and verify RTL for FPGA and SoC systems, from UART controllers to a 4-channel digital lock-in amplifier. Currently pursuing an MS in Electrical Engineering at San José State University.</p>
+      <div class="cta">
+        <a class="btn primary" href="#projects">View Projects</a>
+        <a class="btn secondary" href="#contact">Contact Me</a>
+      </div>
+      <p class="bin" aria-hidden="true">01000110 01010000 01000111 01000001</p>
+    </div>
+    <div class="visual" id="visual">
+      <canvas id="gl" role="img" aria-label="Decorative 3D visual of a rotating microchip with a drifting signal waveform."></canvas>
+      <div class="fallback">Decorative visual: a microchip with a sine-wave signal passing through it. (3D graphics unavailable or paused.)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" aria-labelledby="about-h">
+  <div class="wrap">
+    <p class="eyebrow">About</p>
+    <h2 id="about-h">About Me</h2>
+    <div class="grid g2">
+      <div>
+        <p>I'm an electronics and communication engineer who enjoys turning timing diagrams into working hardware. I completed my B.Tech in Electronics &amp; Communication Engineering at Nirma University (minor in Robotics &amp; Automation) and began my MS in Electrical Engineering at San José State University.</p>
+        <p>My research internships at ISRO and the Physical Research Laboratory gave me hands-on experience with SoC FPGAs, static timing analysis, fixed-point DSP pipelines and on-board debugging.</p>
+      </div>
+      <div class="card g">
+        <h3>Interests</h3>
+        <ul>
+          <li>Digital electronics and RTL design</li>
+          <li>Embedded systems and SoC FPGA integration</li>
+          <li>Communication systems and signal processing</li>
+          <li>Verification, timing closure and hardware validation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SKILLS ===== -->
+<section id="skills" aria-labelledby="skills-h">
+  <div class="wrap">
+    <p class="eyebrow">Skills</p>
+    <h2 id="skills-h">Technical Skills</h2>
+    <div class="grid g3">
+      <article class="card"><h3>Digital Electronics</h3>
+        <ul class="tags"><li>Verilog</li><li>VHDL</li><li>RTL Design</li><li>FSM Design</li><li>Digital Logic</li></ul></article>
+      <article class="card b"><h3>Embedded Systems</h3>
+        <ul class="tags"><li>Embedded C</li><li>PS-PL integration</li><li>ARM Cortex-R52</li><li>JTAG</li><li>OpenOCD</li><li>GDB</li></ul></article>
+      <article class="card g"><h3>Programming</h3>
+        <ul class="tags"><li>Python</li><li>C</li><li>MATLAB</li><li>TCL</li><li>Perl</li></ul></article>
+      <article class="card o"><h3>Communication Systems</h3>
+        <ul class="tags"><li>UART</li><li>AXI</li><li>DDS / NCO</li><li>CIC &amp; FIR filters</li><li>CORDIC</li></ul></article>
+      <article class="card"><h3>FPGA Platforms</h3>
+        <ul class="tags"><li>NanoXplore NG-Ultra</li><li>Artix-7 XC7A100T</li><li>Virtex-6</li><li>Altera DE2-115</li><li>Cyclone II</li></ul></article>
+      <article class="card b"><h3>Tools</h3>
+        <ul class="tags"><li>Quartus Prime</li><li>ModelSim</li><li>Vivado</li><li>NXmap</li><li>Cadence</li><li>LTspice</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS ===== -->
+<section id="projects" aria-labelledby="projects-h">
+  <div class="wrap">
+    <p class="eyebrow">Projects</p>
+    <h2 id="projects-h">Selected Projects</h2>
+    <p class="note">REPLACE: add real repository / report links where marked.</p>
+    <div class="grid g3">
+      <article class="card">
+        <h3>8-Bit UART Controller</h3>
+        <p>Verilog UART transmitter/receiver for asynchronous serial communication, with baud-rate generation for 2400, 4800, 9600 and 19200 bps.</p>
+        <ul class="tags"><li>Verilog</li><li>ModelSim</li><li>Quartus</li></ul>
+        <p><strong>Contributions:</strong> TX/RX control logic, start/stop-bit handling, testbench and waveform verification.</p>
+        <a href="#" aria-label="UART controller repository (placeholder link, replace)">Repository (REPLACE)</a>
+      </article>
+      <article class="card o">
+        <h3>Multiple Elevator Control System</h3>
+        <p>5-floor elevator controller using a 5-bit request input and 3-bit floor tracking, implemented on the Altera DE2-115.</p>
+        <ul class="tags"><li>Verilog</li><li>FSM</li><li>Altera DE2-115</li></ul>
+        <p><strong>Contributions:</strong> sequential control for up/down/idle, clock-speed fix for ~1 s floor transitions, state and reset verification.</p>
+        <a href="#" aria-label="Elevator controller repository (placeholder link, replace)">Repository (REPLACE)</a>
+      </article>
+      <article class="card g">
+        <h3>8-Bit Signed Multiplier</h3>
+        <p>Two's complement multiplier producing a 16-bit signed product across the full -128 to +127 input range.</p>
+        <ul class="tags"><li>Verilog</li><li>Datapath</li><li>ModelSim</li></ul>
+        <p><strong>Contributions:</strong> partial-product generation, accumulation logic, tests for positive, negative and mixed-sign operands.</p>
+        <a href="#" aria-label="Signed multiplier repository (placeholder link, replace)">Repository (REPLACE)</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXPERIENCE / EDUCATION ===== -->
+<section id="experience" aria-labelledby="exp-h">
+  <div class="wrap">
+    <p class="eyebrow">Experience &amp; Education</p>
+    <h2 id="exp-h">Timeline</h2>
+    <ol class="timeline">
+      <li><span class="date">Aug 2026 – May 2028 (expected)</span>
+        <h3>MS, Electrical Engineering</h3><p>San José State University, San Jose, CA</p></li>
+      <li><span class="date">Jan 2026 – May 2026</span>
+        <h3>Research Intern, FPGA &amp; DSP</h3><p>Physical Research Laboratory (PRL)</p>
+        <ul>
+          <li>Designed a 4-channel, 32-bit digital lock-in amplifier on the Artix-7 XC7A100T with a 24-bit ADS1278 ADC, DDS/NCO reference, I/Q mixing and multi-rate filtering.</li>
+          <li>Built the Verilog datapath: 5-stage CIC, 512-tap FIR and a pipelined 16-iteration CORDIC.</li>
+          <li>Estimated 13.6K LUTs, 16.15K FFs, 180 DSP48E1 slices (~75%) and 12 BRAMs; validated 1 Hz–1 kHz with ≤1° phase error.</li>
+        </ul></li>
+      <li><span class="date">May 2025 – Jul 2025</span>
+        <h3>Research Intern, FPGA &amp; SoC Design</h3><p>Indian Space Research Organisation (ISRO)</p>
+        <ul>
+          <li>Developed RTL on the NanoXplore NG-ULTRA SoC FPGA for scatterometer signal processing, through synthesis, place-and-route, timing analysis and hardware validation.</li>
+          <li>Reached 228.519 MHz worst-case and 329.489 MHz best-case against a 200 MHz target.</li>
+          <li>Debugged AXI PS-PL communication using Python, JTAG, OpenOCD and GDB.</li>
+        </ul></li>
+      <li><span class="date">2022 – 2026</span>
+        <h3>B.Tech, Electronics &amp; Communication Engineering</h3><p>Nirma University, Ahmedabad. CGPA 7.64/10. Minor: Robotics &amp; Automation.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== ACHIEVEMENTS ===== -->
+<section id="achievements" aria-labelledby="ach-h">
+  <div class="wrap">
+    <p class="eyebrow">Recognition</p>
+    <h2 id="ach-h">Achievements &amp; Certifications</h2>
+    <p class="note">REPLACE: the items below are placeholders. Add your real awards and certificates.</p>
+    <div class="grid g3">
+      <article class="card g"><h3>Timing Closure Result</h3><p>Exceeded the 200 MHz target on NG-ULTRA during ISRO validation (228.519 MHz worst-case).</p></article>
+      <article class="card b"><h3>Certification (REPLACE)</h3><p>Add certification name, issuer and year.</p></article>
+      <article class="card o"><h3>Award or Publication (REPLACE)</h3><p>Add award, paper or presentation details.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" aria-labelledby="contact-h">
+  <div class="wrap">
+    <p class="eyebrow">Contact</p>
+    <h2 id="contact-h">Get in Touch</h2>
+    <div class="grid g2">
+      <div>
+        <p>Open to internships, research collaborations and FPGA/digital design roles.</p>
+        <ul>
+          <li>Email: <a href="mailto:aryamanjain7@gmail.com">aryamanjain7@gmail.com</a></li>
+          <li>GitHub: <a href="https://github.com/YOUR-USERNAME" rel="noopener">github.com/YOUR-USERNAME</a> <span class="note">(REPLACE)</span></li>
+          <li>LinkedIn: <a href="https://linkedin.com/in/aryaman-jain-077bb8250" rel="noopener">linkedin.com/in/aryaman-jain-077bb8250</a></li>
+          <li>Location: San Jose, CA</li>
+        </ul>
+      </div>
+      <form id="form" novalidate aria-describedby="formHelp">
+        <p id="formHelp">All fields are required. Sending opens your email app with the message prefilled.</p>
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="nameErr">
+        <div class="err" id="nameErr"></div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="emailErr">
+        <div class="err" id="emailErr"></div>
+        <label for="msg">Message</label>
+        <textarea id="msg" name="msg" rows="5" required aria-describedby="msgErr"></textarea>
+        <div class="err" id="msgErr"></div>
+        <button class="btn primary" type="submit">Send Message</button>
+        <div id="status" role="status" aria-live="polite" tabindex="-1"></div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">&copy; 2026 Aryaman Montoo Jain. Built with HTML, CSS, Three.js and GSAP.</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+"use strict";
+var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ===== MOBILE NAV ===== */
+var btn=document.getElementById("menuBtn"), list=document.getElementById("navList");
+btn.addEventListener("click",function(){
+  var open=list.classList.toggle("open"); btn.setAttribute("aria-expanded",open);
+});
+list.addEventListener("click",function(e){ if(e.target.tagName==="A"){list.classList.remove("open");btn.setAttribute("aria-expanded","false");} });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&list.classList.contains("open")){list.classList.remove("open");btn.setAttribute("aria-expanded","false");btn.focus();} });
+
+/* ===== ACTIVE NAV INDICATOR (aria-current + underline) ===== */
+var links=[].slice.call(document.querySelectorAll("#navList a"));
+if("IntersectionObserver" in window){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ links.forEach(function(a){ a.setAttribute("aria-current", a.getAttribute("href")==="#"+en.target.id ? "true":"false"); }); }
+    });
+  },{rootMargin:"-45% 0px -50% 0px"});
+  document.querySelectorAll("main section").forEach(function(s){io.observe(s);});
+}
+
+/* ===== GSAP ANIMATIONS (skipped for reduced motion; content visible if GSAP fails) ===== */
+if(window.gsap && !reduce){
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.from(".hero .wrap > div:first-child > *",{y:24,opacity:0,duration:.7,stagger:.1,ease:"power2.out",clearProps:"all"});
+  gsap.from(".visual",{opacity:0,scale:.96,duration:.9,delay:.2,clearProps:"all"});
+  gsap.utils.toArray(".card,.timeline li,h2").forEach(function(el){
+    gsap.from(el,{y:28,opacity:0,duration:.6,ease:"power2.out",clearProps:"all",
+      scrollTrigger:{trigger:el,start:"top 90%",once:true}});
+  });
+  document.querySelectorAll(".card,.btn").forEach(function(el){
+    el.addEventListener("mouseenter",function(){gsap.to(el,{y:-4,duration:.2});});
+    el.addEventListener("mouseleave",function(){gsap.to(el,{y:0,duration:.2});});
+  });
+}
+
+/* ===== THREE.JS: ROTATING CHIP + SIGNAL WAVE ===== */
+var visual=document.getElementById("visual"), canvas=document.getElementById("gl");
+try{
+  if(!window.THREE) throw new Error("no three");
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  var scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(45,1,.1,100);
+  camera.position.set(0,3.2,7); camera.lookAt(0,0,0);
+  var group=new THREE.Group(); scene.add(group);
+  function edges(geo,color){return new THREE.LineSegments(new THREE.EdgesGeometry(geo),new THREE.LineBasicMaterial({color:color}));}
+  group.add(edges(new THREE.BoxGeometry(2.6,.35,2.6),0x22d3ee));           // chip body
+  group.add(edges(new THREE.BoxGeometry(1.2,.36,1.2),0x34d399));           // die
+  var pins=new THREE.Group();
+  for(var i=0;i<8;i++){ var t=-1.05+i*0.3;
+    [[t,1.5],[t,-1.5],[1.5,t],[-1.5,t]].forEach(function(p){
+      var pin=edges(new THREE.BoxGeometry(p[1]===1.5||p[1]===-1.5?.08:.3,.06,p[1]===1.5||p[1]===-1.5?.3:.08),0x60a5fa);
+      pin.position.set(p[0],0,p[1]); pins.add(pin); }); }
+  group.add(pins);
+  // signal wave line
+  var N=120, pos=new Float32Array(N*3), wgeo=new THREE.BufferGeometry();
+  wgeo.setAttribute("position",new THREE.BufferAttribute(pos,3));
+  var wave=new THREE.Line(wgeo,new THREE.LineBasicMaterial({color:0xfb923c}));
+  scene.add(wave);
+  function updateWave(t){ for(var i=0;i<N;i++){ var x=-4+8*i/(N-1); pos[i*3]=x; pos[i*3+1]=-1.2+Math.sin(x*2.2+t)*.45; pos[i*3+2]=0; } wgeo.attributes.position.needsUpdate=true; }
+  function resize(){ var w=visual.clientWidth,h=visual.clientHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+  window.addEventListener("resize",resize); resize();
+  var mx=0,my=0;
+  visual.addEventListener("pointermove",function(e){var r=visual.getBoundingClientRect();mx=(e.clientX-r.left)/r.width-.5;my=(e.clientY-r.top)/r.height-.5;});
+  var running=true, clock=new THREE.Clock();
+  document.addEventListener("visibilitychange",function(){running=!document.hidden; if(running&&!reduce)loop();});
+  function frame(){ var t=clock.getElapsedTime(); updateWave(t*1.5); group.rotation.y=t*.25+mx*.8; group.rotation.x=my*.4; renderer.render(scene,camera); }
+  function loop(){ if(!running)return; frame(); requestAnimationFrame(loop); }
+  if(reduce){ updateWave(0); group.rotation.y=.6; renderer.render(scene,camera); } else loop();
+}catch(err){ visual.classList.add("nogl"); }
+
+/* ===== CONTACT FORM (validation + success/error states) ===== */
+var form=document.getElementById("form"), status=document.getElementById("status");
+function setErr(id,msg){ var f=document.getElementById(id), e=document.getElementById(id+"Err"); e.textContent=msg?"Error: "+msg:""; f.setAttribute("aria-invalid",msg?"true":"false"); return !msg; }
+form.addEventListener("submit",function(ev){
+  ev.preventDefault();
+  var n=form.name.value.trim(), m=form.email.value.trim(), g=form.msg.value.trim();
+  var ok=[ setErr("name",n?"":"Please enter your name."),
+           setErr("email",/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)?"":"Please enter a valid email address."),
+           setErr("msg",g?"":"Please enter a message.") ].every(Boolean);
+  status.className="";
+  if(!ok){ status.className="bad"; status.textContent="Error: please fix the highlighted fields and try again."; status.focus(); form.querySelector("[aria-invalid='true']").focus(); return; }
+  status.className="ok"; status.textContent="Success: your email app should open with the message ready to send. If it doesn't, email aryamanjain7@gmail.com directly.";
+  window.location.href="mailto:aryamanjain7@gmail.com?subject="+encodeURIComponent("Portfolio message from "+n)+"&body="+encodeURIComponent(g+"\n\nFrom: "+n+" ("+m+")");
+  status.focus();
+});
+})();
+</script>
+</body>
+</html>
